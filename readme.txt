@@ -1,0 +1,3 @@
+- Problema con el acceso, es necesario pedir el Elevado para poder usar el método search_tweets de API Tweepy: https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets
+- Para poder recuperar el tweet de forma completa es necesario añadir el argumento tweet_mode='extended': https://docs.tweepy.org/en/stable/extended_tweets.html
+- Para recuperar descartar los rt y quedarnos solo con un tweet añadimos el flag -filter:retweets al argumento en el que se le pasa la query: https://stackoverflow.com/questions/71746985/is-there-a-way-to-filter-out-retweets-from-results-of-search-tweets-using-tweepy
