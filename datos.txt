@@ -1,0 +1,12 @@
+20-10-2022
+- Problema con el acceso, es necesario pedir el Elevado para poder usar el método search_tweets de API Tweepy: https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets
+
+26-10-2022
+- Para poder recuperar el tweet de forma completa es necesario añadir el argumento tweet_mode='extended': https://docs.tweepy.org/en/stable/extended_tweets.html
+- Para recuperar descartar los rt y quedarnos solo con un tweet añadimos el flag -filter:retweets al argumento en el que se le pasa la query: https://stackoverflow.com/questions/71746985/is-there-a-way-to-filter-out-retweets-from-results-of-search-tweets-using-tweepy
+
+27-10-2022
+-Busco una solución para traduccir los tweets de cualquier idioma al inglés. Intento usar una llamada API al servicio de Google Translate pero se obtiene constantemente el fallo 'HTTP Error 429: Too Many Requests'. Finalmente usamos la librería de python googletrans para este requerimiento: https://pypi.org/project/googletrans/
+Para solucionar el error de la libreria se tiene que instalar un parche: https://stackoverflow.com/questions/52455774/googletrans-stopped-working-with-error-nonetype-object-has-no-attribute-group
+
+29-10-2022

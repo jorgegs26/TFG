@@ -1,11 +1,12 @@
 import tweepy
 from tweepy.auth import OAuthHandler
+from translate import get_translation
 
-def get_tweets(query, num_tweets):
-	API_KEY = ''
-	API_SECRET_KEY = ''
-	ACCESS_TOKEN = ''
-	ACCESS_TOKEN_SECRET = ''
+def get_full_tweets(query, num_tweets):
+	API_KEY = 'IXldUsANj3w5xr8OXwVjclfQh'
+	API_SECRET_KEY = 'QQoUqeOinEICmKnJN050uWFJgLV7AOEXSoOQAEfl1rmpJcEnCN'
+	ACCESS_TOKEN = '463777233-Ho48lkuQMLPeJYzohTrvFz5ItKDLmO51Xg8MPPWT'
+	ACCESS_TOKEN_SECRET = 'oqQI6g7PxvldOgTaMjrg52hOtgOeumdpxjG0VnzMVc6pf'
 
 	auth = OAuthHandler(API_KEY, API_SECRET_KEY)
 	auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
@@ -13,14 +14,21 @@ def get_tweets(query, num_tweets):
 	api = tweepy.API(auth)
 	query = query + ' -filter:retweets'
 
-	infoTweets = api.search_tweets(q=query, lang='en', count=num_tweets, tweet_mode='extended')
+	infoTweets = api.search_tweets(q=query, count=num_tweets, tweet_mode='extended')
 	tweets = []
 	for tw in infoTweets:
 		tweets.append(tw.full_text)
 		
 	return tweets
 	
+translated_tweets = []
+tweets = get_full_tweets('#SDGs',50)
 
-t = get_tweets('#SDGs',3)
-for i in t:
-	print(i + '\n')
+for tw in tweets:
+	tr_tweet, language = get_translation(tw, 'en')
+	if(language == ''):
+		print('Error: ', tr_tweet)
+	else:
+		print('Idioma del tweet ',language, ': ', tr_tweet)
+		translated_tweets.append(tr_tweet)
+	
