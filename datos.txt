@@ -10,3 +10,9 @@
 Para solucionar el error de la libreria se tiene que instalar un parche: https://stackoverflow.com/questions/52455774/googletrans-stopped-working-with-error-nonetype-object-has-no-attribute-group
 
 29-10-2022
+- Debido a que hay que separar el texto en oraciones para obtener la información necesario para formar el graph knowledge, necesitamos trocear los tweets por el caracter '.' o '\n'. Con las urls que contienen algunos de estos, el trabajo del troceo se complicaba. La solución ha sido eliminar estas urls, las cuales no aportan información al gráfico: https://github.com/Fhernd/PythonEjercicios/blob/master/Parte001/ex867_extraer_urls_texto.py
+- Creamos la primera versión del graph knowledge: https://prateekjoshi.medium.com/knowledge-graph-a-powerful-data-science-technique-to-mine-information-from-text-with-python-f8bfd217accc
+
+30-10-2022
+- Al lanzar la ejecución de graph_knowledge.py vemos que en ciertos casos se obtiene como relación o como sujetos los iconos de los tweets. Es neceseario eliminar antes de proceder a obtener las relaciones y entidades: https://stackoverflow.com/questions/33404752/removing-emojis-from-a-string-in-python
+Me encuentro con el problema de que ahora mismo mi código solo recupera 100 tweets como máximo, habría que ver como ir paginando sobre twitter.

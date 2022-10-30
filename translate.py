@@ -1,28 +1,6 @@
-# from urllib.parse import urlencode
-# from urllib.request import urlopen, Request
-# import re
-# import json
-
-# def get_google_translate(text, translate_lang, source_lang=None):
-    # if source_lang == None:
-        # source_lang= 'auto'
-        
-    # params = urlencode({'client':'t', 'tl':translate_lang, 'q':text.encode('utf-8'),'sl':source_lang})
-    # http_headers = {"User-Agent":"Mozilla/4.0 (compatible; MSIE 5.5;Windows NT)"}
-    # request_object = Request('http://translate.google.com/translate_a/t?'+params, None, http_headers)
-    
-    # try:
-        # response = urlopen(request_object)
-        # string = re.sub(',,,|,,',',"0",', response.read())
-        # n = json.loads(string)
-        # translate_text = n[0][0][0]
-        # res_source_lang = n[2]
-        # return True, res_source_lang, translate_text    
-    # except Exception as e:
-        # return False, '', str(e)
-
 from googletrans import Translator
 
+# Función para traducir un texto proporcionado a un determinado idioma
 def get_translation(text, lang):
 	translator = Translator()
 	try:
@@ -30,3 +8,13 @@ def get_translation(text, lang):
 		return info.text, info.src
 	except Exception as e:
 		return str(e), ''
+		
+# Función para traducir una lista de textos a un determinado idioma
+def translate_list(listToTranslate, lang):
+	translated_list = []
+	for text in listToTranslate:
+		tr_text, language = get_translation(text, lang)
+		if(language != ''):
+			#print('Language src: ', language, '- Text: ', tr_text)
+			translated_list.append(tr_text)
+	return translated_list
