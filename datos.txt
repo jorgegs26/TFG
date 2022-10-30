@@ -11,8 +11,11 @@ Para solucionar el error de la libreria se tiene que instalar un parche: https:/
 
 29-10-2022
 - Debido a que hay que separar el texto en oraciones para obtener la información necesario para formar el graph knowledge, necesitamos trocear los tweets por el caracter '.' o '\n'. Con las urls que contienen algunos de estos, el trabajo del troceo se complicaba. La solución ha sido eliminar estas urls, las cuales no aportan información al gráfico: https://github.com/Fhernd/PythonEjercicios/blob/master/Parte001/ex867_extraer_urls_texto.py
-- Creamos la primera versión del graph knowledge: https://prateekjoshi.medium.com/knowledge-graph-a-powerful-data-science-technique-to-mine-information-from-text-with-python-f8bfd217accc
+- Creamos la primera versión del graph_knowledge.py: https://prateekjoshi.medium.com/knowledge-graph-a-powerful-data-science-technique-to-mine-information-from-text-with-python-f8bfd217accc
 
 30-10-2022
 - Al lanzar la ejecución de graph_knowledge.py vemos que en ciertos casos se obtiene como relación o como sujetos los iconos de los tweets. Es neceseario eliminar antes de proceder a obtener las relaciones y entidades: https://stackoverflow.com/questions/33404752/removing-emojis-from-a-string-in-python
+Sigo modificando graph_knowledge.py hasta ir llegando a una versión final, cambios:
+	- Eliminar entidades y relaciones vacías para que no se vean nodos separados o relaciones apuntando a nodos vacíos.
+	-  
 Me encuentro con el problema de que ahora mismo mi código solo recupera 100 tweets como máximo, habría que ver como ir paginando sobre twitter.
