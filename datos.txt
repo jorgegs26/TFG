@@ -17,5 +17,4 @@ Para solucionar el error de la libreria se tiene que instalar un parche: https:/
 - Al lanzar la ejecución de graph_knowledge.py vemos que en ciertos casos se obtiene como relación o como sujetos los iconos de los tweets. Es neceseario eliminar antes de proceder a obtener las relaciones y entidades: https://stackoverflow.com/questions/33404752/removing-emojis-from-a-string-in-python
 Sigo modificando graph_knowledge.py hasta ir llegando a una versión final, cambios:
 	- Eliminar entidades y relaciones vacías para que no se vean nodos separados o relaciones apuntando a nodos vacíos.
-	-  
 Me encuentro con el problema de que ahora mismo mi código solo recupera 100 tweets como máximo, habría que ver como ir paginando sobre twitter.
