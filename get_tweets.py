@@ -21,10 +21,10 @@ def delete_icons(text):
 	
 def get_full_tweets(query, num_tweets):
 	# Credenciales de mi usuario
-	API_KEY = ''
-	API_SECRET_KEY = ''
-	ACCESS_TOKEN = ''
-	ACCESS_TOKEN_SECRET = ''
+	API_KEY = 'IXldUsANj3w5xr8OXwVjclfQh'
+	API_SECRET_KEY = 'QQoUqeOinEICmKnJN050uWFJgLV7AOEXSoOQAEfl1rmpJcEnCN'
+	ACCESS_TOKEN = '463777233-Ho48lkuQMLPeJYzohTrvFz5ItKDLmO51Xg8MPPWT'
+	ACCESS_TOKEN_SECRET = 'oqQI6g7PxvldOgTaMjrg52hOtgOeumdpxjG0VnzMVc6pf'
 
 	auth = OAuthHandler(API_KEY, API_SECRET_KEY)
 	auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
