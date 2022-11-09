@@ -11,10 +11,28 @@ Para solucionar el error de la libreria se tiene que instalar un parche: https:/
 
 29-10-2022
 - Debido a que hay que separar el texto en oraciones para obtener la información necesario para formar el graph knowledge, necesitamos trocear los tweets por el caracter '.' o '\n'. Con las urls que contienen algunos de estos, el trabajo del troceo se complicaba. La solución ha sido eliminar estas urls, las cuales no aportan información al gráfico: https://github.com/Fhernd/PythonEjercicios/blob/master/Parte001/ex867_extraer_urls_texto.py
-- Creamos la primera versión del graph_knowledge.py: https://prateekjoshi.medium.com/knowledge-graph-a-powerful-data-science-technique-to-mine-information-from-text-with-python-f8bfd217accc
+- Creo la primera versión del graph_knowledge.py: https://prateekjoshi.medium.com/knowledge-graph-a-powerful-data-science-technique-to-mine-information-from-text-with-python-f8bfd217accc
 
 30-10-2022
 - Al lanzar la ejecución de graph_knowledge.py vemos que en ciertos casos se obtiene como relación o como sujetos los iconos de los tweets. Es neceseario eliminar antes de proceder a obtener las relaciones y entidades: https://stackoverflow.com/questions/33404752/removing-emojis-from-a-string-in-python
 Sigo modificando graph_knowledge.py hasta ir llegando a una versión final, cambios:
 	- Eliminar entidades y relaciones vacías para que no se vean nodos separados o relaciones apuntando a nodos vacíos.
 Me encuentro con el problema de que ahora mismo mi código solo recupera 100 tweets como máximo, habría que ver como ir paginando sobre twitter.
+
+1-11-2022:
+- Para la paginación de tweets encuentro la solución con el Cursor que proporciona Tweepy, para ello creamos un código que itera de 100 tweets en 100 tweets hasta llegar al número requerido: https://stackoverflow.com/questions/71041422/tweepys-api-search-tweets-is-only-giving-me-148-results
+
+9-11-2022:
+- Mejoras que incluir en el TFG después de hablar con David:
+	- Separar la descarga de tweets con la creación del gráfico de conocimiento.
+	- Almacenar estos tweets en una base de datos, la cual está en el remoto f-l2108-pc01.aulas.etsit.urjc.es en el puerto 21502. Es una base de datos en mongodb.
+	- Crear la BD "TFG" donde iré guarando los tweets sobre colecciones que tendrán como nombre la query que usamos para buscar los tweets.
+- Creo el archivo save_tweets.py, en el cual obtengo los tweets y las traducciones de estos a través de get_tweets_Cursor.py y translate.py y después se guardan en la base de datos "TFG" y en la Colección correspondiente: https://www.w3schools.com/python/python_mongodb_create_collection.asp.
+	- El registro que se guarda en la BD tiene la siguiente forma:
+		{tweet:'', user:'', date: ''}
+		Se guarda el tweet, el usuario que lo escribe y la fecha en formato utc de cuando se publica el tweet.
+- Para visualizar los datos de manera más gráfica uso la app 'Studio 3T Linux': https://studio3t.com/download-studio3t-free
+- Queda pendiente hacer que el graph_knowledge.py recupere los tweets de la BD y muestre el gráfico.
+- ¿Eliminar de los nodos palabras que tenga # o @?
+
+
