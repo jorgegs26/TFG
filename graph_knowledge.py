@@ -1,10 +1,21 @@
-from translate import get_translation, translate_list
-from get_tweets import get_full_tweets, separar_en_oraciones
+from get_tweets_Cursor import split_in_sentences
 import spacy
 from spacy.matcher import Matcher
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
+import pymongo
+
+# SE TENDRÁ QUE SUSTITUIR ESTE MÉTODO EN EL GRAPH KNOWLEDGE
+def get_tweets(name, mydb):
+	print('Recuperando los tweets de la BBDD "TFG" de la colección ', name, '...')
+	mycol = mydb[name]
+	myresult = mycol.find()
+	tweets = []
+	for data in myresult:
+		tweets.append(data['tweet'])
+		
+	return tweets
 
 # Función para eliminar las entidades y relaciones que estén vacías para que no aparezcan nodos separador o relaciones apuntando a un nodo vacío
 def delete_empty_entities_and_relation(list_entities, list_relation):
@@ -12,9 +23,11 @@ def delete_empty_entities_and_relation(list_entities, list_relation):
     entities = []
     relation = []
     for pos in range(num):
-        if(list_entities[pos][0] != '' and list_entities[pos][1] != '' and list_relation[pos] != ''):
-            entities.append(list_entities[pos])
-            relation.append(list_relation[pos])
+        if(list_entities[pos][0] != '' and list_entities[pos][1] != '' and list_relation[pos] != ''): # ¿Posible filtrado para que no aparezcan nodos con # o nombres de usuario (palabras con @)?
+            if not ('#' in list_entities[pos][0] or '#' in list_entities[pos][1] or '#' in list_relation[pos]):
+                if not ('@' in list_entities[pos][0] or '@' in list_entities[pos][1] or '@' in list_relation[pos]):
+                    entities.append(list_entities[pos])
+                    relation.append(list_relation[pos])
     return entities, relation
 
 def get_entities(sent):
@@ -93,39 +106,35 @@ def get_relation(sent):
 	return relation
 
 	
-
-tweets = get_full_tweets('Rusia', 1000)
-print(len(tweets))
-translated_tweets = translate_list(tweets, 'en')
+## RECUPERAR TWEETS DE LA BBDD
+myclient = pymongo.MongoClient('mongodb://f-l2108-pc01.aulas.etsit.urjc.es:21502/')
+mydb = myclient["TFG"]
+tweets = get_tweets('Rusia', mydb)
 
 nlp = spacy.load('en_core_web_sm')
 
 entity_pairs = []
 relation_pairs = []
-for i in translated_tweets:
-	l = separar_en_oraciones(i)
+for i in tweets:
+	l = split_in_sentences(i)
 	for txt in l:
 		if txt != '':
 			relation_pairs.append(get_relation(txt))
 			entity_pairs.append(get_entities(txt))
-			
-entity_pairs,relation_pairs = delete_empty_entities_and_relation(entity_pairs,relation_pairs)
-            
-# print('#### RELACIONES')
-# pos = 0
-# for i in entity_pairs:
-    # print(i, ' - ', relation_pairs[pos])
-    # pos = pos + 1
-	
-#print(pd.Series(entity_pairs).value_counts()[:2])
-#print(pd.Series(relation_pairs).value_counts()[:2])
 
+entity_pairs,relation_pairs = delete_empty_entities_and_relation(entity_pairs,relation_pairs)
 	
 # extract subject
 source = [i[0] for i in entity_pairs]
-
 # # extract object
 target = [i[1] for i in entity_pairs]
+
+print('nodo 1:')
+print(pd.Series(source).value_counts()[:2])
+print('nodo 2:')
+print(pd.Series(target).value_counts()[:2])
+print('relaciones:')
+print(pd.Series(relation_pairs).value_counts()[:4])
 
 kg_df = pd.DataFrame({'source':source, 'target':target, 'edge':relation_pairs})
 

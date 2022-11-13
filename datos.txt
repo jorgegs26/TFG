@@ -33,6 +33,10 @@ Me encuentro con el problema de que ahora mismo mi código solo recupera 100 twe
 		Se guarda el tweet, el usuario que lo escribe y la fecha en formato utc de cuando se publica el tweet.
 - Para visualizar los datos de manera más gráfica uso la app 'Studio 3T Linux': https://studio3t.com/download-studio3t-free
 - Queda pendiente hacer que el graph_knowledge.py recupere los tweets de la BD y muestre el gráfico.
-- ¿Eliminar de los nodos palabras que tenga # o @?
+- ¿Eliminar de los nodos y relaciones palabras que tengan el carcater # o @?
+
+13-11-2022:
+- Modificación del archivo graph_knowledge.py para que funcione a través de los tweets que carga de la base de datos y se eliminan aquellos nodos o relaciones que contengan el caracter @ o #: https://www.w3schools.com/python/python_mongodb_create_collection.asp.
+- También he cambiado las trazas del archivo get_tweets_Cursor.py y translate.py. El archivo save_tweets.py usa estos dos archivos anteriores y es el que dura más tiempo en ejecución. La modificación es para que exista una mejor vista a nivel de usuario, por eso he implementado dos barras de carga para que se sepa cuánto tiempo queda de ejecución. La primera de ellas es una barra de carga de bloques de tweets que van de 100 en 100 y la segunda es una barra de carga que va de 1 en 1 traduciendo los tweets.
 
 
