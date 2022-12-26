@@ -22,10 +22,10 @@ def delete_icons(text):
 # Función para obtener los tweets, el usuario y la fecha de creación en horario utc
 def get_full_tweets(query, num_tweets):
     # Credenciales de mi usuario
-    API_KEY = ''
-    API_SECRET_KEY = ''
-    ACCESS_TOKEN = ''
-    ACCESS_TOKEN_SECRET = ''
+    API_KEY = 'IXldUsANj3w5xr8OXwVjclfQh'
+    API_SECRET_KEY = 'QQoUqeOinEICmKnJN050uWFJgLV7AOEXSoOQAEfl1rmpJcEnCN'
+    ACCESS_TOKEN = '463777233-Ho48lkuQMLPeJYzohTrvFz5ItKDLmO51Xg8MPPWT'
+    ACCESS_TOKEN_SECRET = 'oqQI6g7PxvldOgTaMjrg52hOtgOeumdpxjG0VnzMVc6pf'
 
     auth = OAuthHandler(API_KEY, API_SECRET_KEY)
     auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
@@ -33,10 +33,14 @@ def get_full_tweets(query, num_tweets):
     api = tweepy.API(auth)
     query = query + ' -filter:retweets' # Añadimos el filtro para evitar recuperar rts, solo nos interesan tweets escritos para no obtener ningún duplicado
 
-    # El result_type es para sacar los tweets que tienen mayor importancia en la reed
-    # El tweet_mode es para recuperar el tweet completo
     tweets = []
-    num = int(num_tweets/100)+1
+    
+    #Iteraciones que se tienen que hacer en la descarga de tweets
+    if (num_tweets%100) == 0:
+	    num = int(num_tweets/100)
+    else:
+	    num = int(num_tweets/100)+1
+		
     tweets_to_search = num_tweets
     j = 0
     
@@ -47,6 +51,7 @@ def get_full_tweets(query, num_tweets):
         print('', end='\r')
         if(tweets_to_search >= 100):
             #print('El numero de tweets descargados es ', str(j), '/', str(num), ', descargando 100 más...')
+            # tweet_mode es para recuperar el tweet completo
             for i in tweepy.Cursor(api.search_tweets, q=query, count=100, tweet_mode='extended').items(100):
                 info = []
                 text = delete_urls(i.full_text)
@@ -59,6 +64,7 @@ def get_full_tweets(query, num_tweets):
             tweets_to_search = tweets_to_search - 100
         else:
             #print('El numero de tweets descargados es ', str(j), '/', str(num), ', descargando los ', str(num-j), ' restantes...')
+            # tweet_mode es para recuperar el tweet completo
             for i in tweepy.Cursor(api.search_tweets, q=query, count=tweets_to_search, tweet_mode='extended').items(tweets_to_search):
                 info = []
                 text = delete_urls(i.full_text)
@@ -71,7 +77,7 @@ def get_full_tweets(query, num_tweets):
     
     print()
     
-    return tweets # El formato de la lista será el siguiente: [[tweet,usuario,fecha],[tweet,usuario,fecha]...]
+    return tweets # El formato de la lista será el siguiente: [[tweet,user,date],[tweet,user,date]...]
 
 # Función para separar las frases de un párrafo. Esto es necesario para formar las entidades y relaciones del gráfico de conocimiento
 def split_in_sentences(text):

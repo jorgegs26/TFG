@@ -16,6 +16,7 @@ def translate_list(listToTranslate, lang):
     count = 0
     num = len(listToTranslate)
     print('Traduciendo', num, 'tweets...')
+    error = 0
     
     for i in tqdm(range(num)):
         tweet = listToTranslate[count]
@@ -28,8 +29,11 @@ def translate_list(listToTranslate, lang):
             info.append(tweet[1])
             info.append(tweet[2])
             translated_list.append(info)
+        else:
+            error = error + 1
         count = count + 1
     
-    print()
+    if error != 0:
+        print('Número de tweets no traducidos:', error)
     
     return translated_list # El formato de la lista será el siguiente: [[tweet_traducido,usuario,fecha],[tweet_traducido,usuario,fecha]...]

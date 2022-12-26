@@ -36,7 +36,14 @@ Me encuentro con el problema de que ahora mismo mi código solo recupera 100 twe
 - ¿Eliminar de los nodos y relaciones palabras que tengan el carcater # o @?
 
 13-11-2022:
-- Modificación del archivo graph_knowledge.py para que funcione a través de los tweets que carga de la base de datos y se eliminan aquellos nodos o relaciones que contengan el caracter @ o #: https://www.w3schools.com/python/python_mongodb_create_collection.asp.
+- Modificación del archivo graph_knowledge.py para que funcione a través de los tweets que carga de la base de datos y se eliminan aquellos nodos o relaciones que contengan el caracter @ y las relaciones que contengan #: https://www.w3schools.com/python/python_mongodb_create_collection.asp.
 - También he cambiado las trazas del archivo get_tweets_Cursor.py y translate.py. El archivo save_tweets.py usa estos dos archivos anteriores y es el que dura más tiempo en ejecución. La modificación es para que exista una mejor vista a nivel de usuario, por eso he implementado dos barras de carga para que se sepa cuánto tiempo queda de ejecución. La primera de ellas es una barra de carga de bloques de tweets que van de 100 en 100 y la segunda es una barra de carga que va de 1 en 1 traduciendo los tweets.
 
+26-12-2022:
+- Comienzo con el modelado de BERTopic para mostrar datos, esquemas o gráficas nuevas sobre los tweets, para ello instalamos la nueva libreria: https://maartengr.github.io/BERTopic/index.html. 
+- En este caso necesito una gráfica que distingue entre topics del tema de conversación y las fechas sobre las cuales se ha ido escribiendo para ver los picos o fechas importantes en los cuales fueron Trendic Topic: 
+	https://maartengr.github.io/BERTopic/getting_started/topicsovertime/topicsovertime.html#example
+	https://maartengr.github.io/BERTopic/getting_started/visualization/visualization.html#visualize-topics-over-time
+	https://towardsdatascience.com/implement-your-topic-modeling-using-the-bertopic-library-d6708baa78fe
+- Me quedo teniendo problemas para pintar esta gráfica: https://github.com/MaartenGr/BERTopic/issues/376
 

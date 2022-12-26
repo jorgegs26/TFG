@@ -6,7 +6,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pymongo
 
-# SE TENDRÁ QUE SUSTITUIR ESTE MÉTODO EN EL GRAPH KNOWLEDGE
 def get_tweets(name, mydb):
 	print('Recuperando los tweets de la BBDD "TFG" de la colección ', name, '...')
 	mycol = mydb[name]
@@ -23,11 +22,14 @@ def delete_empty_entities_and_relation(list_entities, list_relation):
     entities = []
     relation = []
     for pos in range(num):
-        if(list_entities[pos][0] != '' and list_entities[pos][1] != '' and list_relation[pos] != ''): # ¿Posible filtrado para que no aparezcan nodos con # o nombres de usuario (palabras con @)?
-            if not ('#' in list_entities[pos][0] or '#' in list_entities[pos][1] or '#' in list_relation[pos]):
-                if not ('@' in list_entities[pos][0] or '@' in list_entities[pos][1] or '@' in list_relation[pos]):
+        if(list_entities[pos][0] != '' and list_entities[pos][1] != '' and list_relation[pos] != ''):
+            if not ('#' in list_relation[pos]): # Filtrado para que no aparezcan # como relaciones
+                if not ('@' in list_entities[pos][0] or '@' in list_entities[pos][1] or '@' in list_relation[pos]): # Filtrado para que no aparezcan nombres de usuarios
                     entities.append(list_entities[pos])
                     relation.append(list_relation[pos])
+            else:
+                print(list_entities[pos], list_relation[pos])
+
     return entities, relation
 
 def get_entities(sent):
@@ -107,7 +109,7 @@ def get_relation(sent):
 
 	
 ## RECUPERAR TWEETS DE LA BBDD
-myclient = pymongo.MongoClient('mongodb://f-l2108-pc01.aulas.etsit.urjc.es:21502/')
+myclient = pymongo.MongoClient('mongodb://f-l3202-pc02.aulas.etsit.urjc.es:21500/')
 mydb = myclient["TFG"]
 tweets = get_tweets('Rusia', mydb)
 
@@ -129,12 +131,14 @@ source = [i[0] for i in entity_pairs]
 # # extract object
 target = [i[1] for i in entity_pairs]
 
-print('nodo 1:')
-print(pd.Series(source).value_counts()[:2])
-print('nodo 2:')
-print(pd.Series(target).value_counts()[:2])
-print('relaciones:')
-print(pd.Series(relation_pairs).value_counts()[:4])
+print('Nº tweets',len(tweets))
+
+# print('nodo 1:')
+# print(pd.Series(source).value_counts()[:2])
+# print('nodo 2:')
+# print(pd.Series(target).value_counts()[:2])
+# print('relaciones:')
+# print(pd.Series(relation_pairs).value_counts()[:4])
 
 kg_df = pd.DataFrame({'source':source, 'target':target, 'edge':relation_pairs})
 
