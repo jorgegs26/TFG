@@ -35,45 +35,19 @@ def get_full_tweets(query, num_tweets):
 
     tweets = []
     
-    #Iteraciones que se tienen que hacer en la descarga de tweets
-    if (num_tweets%100) == 0:
-	    num = int(num_tweets/100)
-    else:
-	    num = int(num_tweets/100)+1
-		
-    tweets_to_search = num_tweets
-    j = 0
-    
     print('Descargando', num_tweets, 'tweets en bloques de 100 en 100...')
     
-    for i in tqdm(range(num)):
-    #while j < num:
+    for i, tweet in enumerate(tqdm(tweepy.Cursor(api.search_tweets, q=query, result_type='mixed', tweet_mode='extended', count=100).items(num_tweets))):
         print('', end='\r')
-        if(tweets_to_search >= 100):
-            #print('El numero de tweets descargados es ', str(j), '/', str(num), ', descargando 100 más...')
-            # tweet_mode es para recuperar el tweet completo
-            for i in tweepy.Cursor(api.search_tweets, q=query, count=100, tweet_mode='extended').items(100):
-                info = []
-                text = delete_urls(i.full_text)
-                text = delete_icons(text)
-                info.append(text)
-                info.append(i.user.screen_name)
-                info.append(str(i.created_at))
-                tweets.append(info)
-            j = j + 100
-            tweets_to_search = tweets_to_search - 100
-        else:
-            #print('El numero de tweets descargados es ', str(j), '/', str(num), ', descargando los ', str(num-j), ' restantes...')
-            # tweet_mode es para recuperar el tweet completo
-            for i in tweepy.Cursor(api.search_tweets, q=query, count=tweets_to_search, tweet_mode='extended').items(tweets_to_search):
-                info = []
-                text = delete_urls(i.full_text)
-                text = delete_icons(text)
-                info.append(text)
-                info.append(i.user.screen_name)
-                info.append(str(i.created_at))
-                tweets.append(info)
-            j = j + tweets_to_search
+        info = []
+        text = delete_urls(tweet.full_text)
+        text = delete_icons(text)
+        info.append(text)
+        info.append(tweet.user.screen_name)
+        info.append(str(tweet.created_at))
+        tweets.append(info)
+        #print(i, tweet.id)
+    print()
     
     print()
     

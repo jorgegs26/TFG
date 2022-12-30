@@ -1,4 +1,4 @@
-from get_tweets_Cursor import get_full_tweets
+from xd import get_full_tweets
 from translate import translate_list
 import pymongo
 
@@ -33,8 +33,8 @@ def insert_data(list_data, name, mydb):
 
 
 # INDICAR QUERY QUE HAY QUE BUSCAR Y NUMERO DE TWEETS
-theme_of_search = 'Rusia'
-number_of_tweets = 359
+theme_of_search = 'SDGs'
+number_of_tweets = 5000
 
 tweets = get_full_tweets(theme_of_search, number_of_tweets)
 translated_tweets = translate_list(tweets, 'en')

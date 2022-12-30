@@ -111,7 +111,7 @@ def get_relation(sent):
 ## RECUPERAR TWEETS DE LA BBDD
 myclient = pymongo.MongoClient('mongodb://f-l3202-pc02.aulas.etsit.urjc.es:21500/')
 mydb = myclient["TFG"]
-tweets = get_tweets('Rusia', mydb)
+tweets = get_tweets('SDGs', mydb)
 
 nlp = spacy.load('en_core_web_sm')
 
