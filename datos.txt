@@ -47,3 +47,11 @@ Me encuentro con el problema de que ahora mismo mi código solo recupera 100 twe
 	https://towardsdatascience.com/implement-your-topic-modeling-using-the-bertopic-library-d6708baa78fe
 - Me quedo teniendo problemas para pintar esta gráfica: https://github.com/MaartenGr/BERTopic/issues/376
 
+31-12-2022:
+- Soluciono el problema de la gráfica con show(): https://plotly.com/python/creating-and-updating-figures/
+- El tema elegido para hacer la búsqueda en twitter va a ser 'SDGs'.
+- Para el modelado con BERTopic usaremos de momento dos gráficas, Topics over Time y Topic Word Scores:
+	https://maartengr.github.io/BERTopic/getting_started/visualization/visualization.html#visualize-hierarchical-documents
+- Realizo una gráfica en la cual se verá de forma más clara el número de tweets que hubo a lo largo de los días para ver los picos.
+	
+
